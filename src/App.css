@@ -1,38 +1,118 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+body {
+  background-image: rgb(2,0,40);
+  background-image: linear-gradient(180deg, rgb(27, 21, 149) 0%, rgba(3,3,107,1) 0%, rgba(255,255,255,1) 100%);
   min-height: 100vh;
+  background-repeat: no-repeat;
+
+}
+*{
+  Font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+.heading{
+  margin-top: 100px;
+  color: aliceblue;
+  font-size: 50px;
+}
+.content-wrapper{
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.content-wrapper .header{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 50px;
+}
+.header .entry{
+  display: flex;
+  gap: 10px;
+}
+.entry .add{
+  width: 25vw;
+  padding: 10px;
+  border-radius: 15px;
+  border: transparent;
+}
+.header .filter .filterBtn{
+  min-width: 10vw;
+  height: 100%;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border: transparent;
+  background-color: #3D3995FF;
+  color: aliceblue;
+  font-size: large;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  transition: box-shadow 0.3s ease-in-out;
+}
+.header .filter .filterBtn:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.header .filter .filter-container{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  min-width: 10vw;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  overflow: hidden;
+  height: 0px;
+  transition: 0.3s ease-in-out;
+
+}
+
+.header .filter .filter-container.open {
+  height: 150px;
+}
+.filter-container .filter-item{
+  background-color: #3D3995FF;
+  border: transparent;
+  height: 40px;
+  padding: 4px;
+  color: aliceblue;
+  font-size: large;
+  box-shadow: 0 1px 2px rgba(244, 244, 244, 0.15);
+  transition: box-shadow 0.3s ease-in-out;
+}
+.filter-container .filter-item:hover{
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+}
+.list-Itmes{
+  margin: 20px 0px;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  gap: 10px;
+}
+.clearBtn{
+  margin-top: 10px;
+  width: 20vw;
+  height: 4vh;
+  background-color: #3D3995FF;
+  color: aliceblue;
+  border: transparent;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  transition: box-shadow 0.3s ease-in-out;
+  font-size: large;
+}
+.clearBtn:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.items{
+  background-color: rgb(223, 223, 220);
+  width: 40vw;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: large;
+  overflow: auto;
+}
+.listBtn{
+  background-color: transparent;
+  border: 0;
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
