@@ -68,6 +68,7 @@ function MyApp() {
         </div>
       );
     }
+    return null;
   });
 
   function handleCheck(index:number){
