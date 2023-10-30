@@ -1,32 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faTrash,faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 
-let submitBtn = <FontAwesomeIcon icon={faPaperPlane} />
-let checkBtn = <FontAwesomeIcon icon={faCheck} />;
-let editBtn = <FontAwesomeIcon icon={faEdit} />;
-let trashBtn = <FontAwesomeIcon icon={faTrash} />
 function MyApp() {
+  const savedListString = localStorage.getItem('list');
+  const savedList = savedListString ? JSON.parse(savedListString) : []; 
+  
+  const savedEdit = localStorage.getItem('Edit');
+  const parseEdit = savedEdit ? JSON.parse(savedEdit) : []; 
+
+  const savedcheck = localStorage.getItem('checked');
+  const parsecheck = savedcheck ? JSON.parse(savedcheck) : [];
+
+  const savedbtn = localStorage.getItem('btnVal');
+  const parsebtn = savedbtn ? JSON.parse(savedbtn) : [];
+
   const [input,setinput] = useState<string>("");
-  const [list,setlist] = useState<string[]>([]);
-  const [Edit,setEdit] = useState<boolean[]>([])
-  const [checked, setChecked] = useState<boolean[]>([]);
-  const [btnVal, setbtnVal] = useState<any>([]);
+  const [list,setlist] = useState<string[]>(savedList);
+  const [Edit,setEdit] = useState<boolean[]>(parseEdit)
+  const [checked, setChecked] = useState<boolean[]>(parsecheck);
+  const [btnVal, setbtnVal] = useState<any>(parsebtn);
   const [filter, setFilter] = useState("all");
   const [isSliderOpen, setSliderOpen] = useState(false);
 
+
+  useEffect(() => {
+    localStorage.setItem("list", JSON.stringify(list));
+    localStorage.setItem("Edit", JSON.stringify(Edit));
+    localStorage.setItem("checked", JSON.stringify(checked));
+    localStorage.setItem("btnVal", JSON.stringify(btnVal));
+    console.log(localStorage);
+    
+    
+  }, [list, Edit, checked, btnVal]);
+
   function submit(){
     if(input){
+      
       setEdit([...Edit, false]);
       setlist([...list,input])
       setinput("")
       setChecked([...checked, false]);
-      setbtnVal([...btnVal,editBtn])
+      setbtnVal([...btnVal,"Edit"])
     }
+    
   }
   const mylist = list.map((element, index) => {
     if (
@@ -58,12 +76,17 @@ function MyApp() {
               }
             }}
             style={{ background: Edit[index]? "white" : ""}}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleEdit(index)
+              }
+            }}
           />
           <button className="listBtn" onClick={() => handleEdit(index)}>
             {btnVal[index]}
           </button>
           <button className="listBtn" onClick={() => handleDelete(index)}>
-            {trashBtn}
+            {<FontAwesomeIcon icon={faTrash} />}
           </button>
         </div>
       );
@@ -88,11 +111,11 @@ function MyApp() {
   }
   function handleEdit(index:number){
     const btn = [...btnVal]
-    if(btn[index]=== editBtn){
-      btn[index] = checkBtn;
+    if(btn[index]=== "Edit"){
+      btn[index] = "Done";
       setbtnVal(btn);
-    }else if(btn[index]=== checkBtn){
-      btn[index] = editBtn;
+    }else if(btn[index]=== "Done"){
+      btn[index] = "Edit";
       setbtnVal(btn);
     }
     const update = [...Edit]
@@ -133,7 +156,7 @@ function MyApp() {
               submit();
             }
           }} placeholder="Enter Your ToDo Tasks..."/>
-        <button className="listBtn" onClick={() => submit() }>{submitBtn}</button>
+        <button className="listBtn" onClick={() => submit() }>{ <FontAwesomeIcon icon={faPaperPlane} />}</button>
         <div className="filter">
         <button className="filterBtn" onClick={() => toggleSlider() }>Filter</button>
         <div className={`filter-container ${isSliderOpen ? 'open' : ''}`}>
